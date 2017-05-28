@@ -9,9 +9,8 @@
   </section>
 </template>
 
-<style scoped>
-.title
-{
-  margin: 50px 0;
+<script>
+export default {
+  layout: 'blog'
 }
-</style>
+</script>
