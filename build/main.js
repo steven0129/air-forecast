@@ -65,18 +65,26 @@ module.exports =
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
+
+var webpack = __webpack_require__(5);
 
 module.exports = {
   head: {
-    title: 'PM2.5空氣預報',
+    title: 'PM2.5空氣預報系統',
     meta: [{ charset: 'utf-8' }, { name: 'viewport', content: 'width=device-width, initial-scale=1' }, { hid: 'description', name: 'description', content: 'PM2.5空氣預報' }, { src: 'https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js' }],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }, { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css' }]
+  },
+  build: {
+    vendor: ['jquery'],
+    plugins: [new webpack.ProvidePlugin({
+      '$': 'jquery'
+    })]
   }
 };
 
@@ -107,6 +115,12 @@ module.exports = require("regenerator-runtime");
 
 /***/ },
 /* 5 */
+/***/ function(module, exports) {
+
+module.exports = require("webpack");
+
+/***/ },
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
