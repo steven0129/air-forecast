@@ -14,18 +14,18 @@
                 <button class="ui inverted button">
                     Login
                 </button>
-            </div>
+            </div> 
         </div>
     </section>
 </template>
 
 <script>
-import $ from 'jquery'
+// import $ from 'jquery'
 
-export default {
-    mounted: () => {
-      $('.ui.sidebar').sidebar('attach events', '.toc.item');
-    }
-}
+// export default {
+//     mounted: () => {
+//       $('.ui.sidebar').sidebar('attach events', '.toc.item');
+//     }
+// }
      
 </script>
