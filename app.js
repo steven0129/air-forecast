@@ -1,24 +1,38 @@
-var Koa = require('koa')
-var app = new Koa()
-var Nuxt = require('nuxt')
+const Koa = require('koa')
+const app = new Koa()
+const views = require('koa-views')
+const json = require('koa-json')
+const onerror = require('koa-onerror')
+const bodyparser = require('koa-bodyparser')
+const logger = require('koa-logger')
 
-var config = require('./nuxt.config.js')
-config.dev = !(app.env === 'production')
+const index = require('./routes/index')
 
-var nuxt = new Nuxt(config)
+// error handler
+onerror(app)
 
-// Build only in dev mode
-if (config.dev) {
-  nuxt.build()
-  .catch((error) => {
-    console.error(error) // eslint-disable-line no-console
-    process.exit(1)
-  })
-}
+// middlewares
+app.use(bodyparser({
+  enableTypes: ['json', 'form', 'text']
+}))
+app.use(json())
+app.use(logger())
+app.use(require('koa-static')(__dirname + '/public'))
+app.use(require('koa-static')(__dirname + '/bower_components'))
 
+app.use(views(__dirname + '/views', {
+  extension: 'pug'
+}))
+
+// logger
 app.use(async (ctx, next) => {
-  ctx.status = 200 // koa defaults to 404 when it sees that status is unset
-  await nuxt.render(ctx.req, ctx.res)
+  const start = new Date()
+  await next()
+  const ms = new Date() - start
+  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
-app.listen(3000)
+// routes
+app.use(index.routes(), index.allowedMethods())
+
+module.exports = app
